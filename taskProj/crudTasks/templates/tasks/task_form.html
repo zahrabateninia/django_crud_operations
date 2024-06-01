@@ -1,33 +1,51 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if form.instance.pk %}Edit Task{% else %}Create Task{% endif %}</title>
-</head>
-<body>
-    <h1>{% if form.instance.pk %}Edit Task{% else %}Create Task{% endif %}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
-    <a href="{% url 'task-list' %}">Back to Task List</a>
-</body>
-</html> -->
-
-<!-- templates/tasks/task_form.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Task Form</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        .help-text {
+            display: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 5px;
+            position: absolute;
+            z-index: 1000;
+            max-width: 300px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            position: relative;
+        }
+        label:hover + .help-text {
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <h1>{{ form.instance.pk|yesno:"Update Task,Create Task" }}</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-group">
+            <label for="id_title">{{ form.title.label }}</label>
+            <div class="help-text">{{ form.title.help_text }}</div>
+            {{ form.title }}
+        </div>
+        <div class="form-group">
+            <label for="id_description">{{ form.description.label }}</label>
+            <div class="help-text">{{ form.description.help_text }}</div>
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            <label for="id_due_date">{{ form.due_date.label }}</label>
+            <div class="help-text">{{ form.due_date.help_text }}</div>
+            {{ form.due_date }}
+        </div>
+        <div class="form-group">
+            <label for="id_is_completed">{{ form.is_completed.label }}</label>
+            <div class="help-text">{{ form.is_completed.help_text }}</div>
+            {{ form.is_completed }}
+        </div>
         <button type="submit">Save</button>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
