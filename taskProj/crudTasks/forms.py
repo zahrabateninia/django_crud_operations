@@ -15,3 +15,6 @@ class TaskForm(forms.ModelForm):
             'title': 'Enter the title of the task.',
             'description': 'Enter a detailed description of the task.',
         }
+        widgets = {
+            'due_date': forms.DateTimeInput(attrs={'class': 'datetimepicker'}),
+        }

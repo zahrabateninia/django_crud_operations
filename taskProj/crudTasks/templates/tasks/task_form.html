@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,5 +13,29 @@
         <button type="submit">Save</button>
     </form>
     <a href="{% url 'task-list' %}">Back to Task List</a>
+</body>
+</html> -->
+
+<!-- templates/tasks/task_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+    <h1>{{ form.instance.pk|yesno:"Update Task,Create Task" }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr(".datetimepicker", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+    </script>
 </body>
 </html>
