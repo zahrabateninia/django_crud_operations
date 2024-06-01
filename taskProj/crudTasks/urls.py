@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from .views import task_list, task_create, task_update, task_delete
 
 
