@@ -9,7 +9,7 @@ urlpatterns = [
     path('create/', task_create, name='task-create'),
     # Map the tasks/update/<int:pk>/ path to the task_update view, which will display a form to update an existing task.
     path('update/<int:pk>/', task_update, name='task-update'),
-    # It display a confirmation page to delete a task.
+    # It displays a confirmation page to delete a task.
     path('delete/<int:pk>/', task_delete, name='task-delete'),
 ]
 
