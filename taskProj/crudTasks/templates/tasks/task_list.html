@@ -4,30 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task List</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #ddd;
-        }
-        a {
-            text-decoration: none;
-            color: blue;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
 </head>
 <body>
     <h1>Task List</h1>
@@ -56,7 +34,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <button>
+    <button class="btn">
         <a href="{% url 'task-create' %}">Create New Task</a>
     </button>
 </body>
