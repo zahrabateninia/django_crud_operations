@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Task</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/confirmStyles.css' %}">
 </head>
 <body>
-    <h1>Delete Task</h1>
-    <p>Are you sure you want to delete "{{ task.title }}"?</p>
+    <h1 class="delete_task">Delete Task</h1>
+    <div class="confirm_box">
+        <p>Are you sure you want to delete "{{ task.title }}"?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Yes, delete</button>
+        <button class="btn" type="submit">Yes, delete</button>
     </form>
     <a href="{% url 'task-list' %}">Cancel</a>
+    </div>
 </body>
 </html>

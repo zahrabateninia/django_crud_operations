@@ -1,0 +1,54 @@
+:root {
+    --th-bg-pink : rgb(230, 164, 180);
+    --tr-bg-light-pink : rgb(255, 239, 239);
+    --tr-bg-hover :rgb(243, 208, 215);
+    --link-btn-black : rgb(61, 59, 64);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 1rem;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+h1.delete_task{
+    display: flex;
+    justify-content: center;
+}
+button.btn {
+    display: inline-block;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: var(--link-btn-black);
+    background-color: var(--th-bg-pink);
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+p{
+    font-size: 1.7rem;
+}
+.btn a {
+    color: var(--btn-black);
+    text-decoration: none;
+}
+.btn:hover {
+    background-color: var(--tr-bg-hover);
+}
+
+div.confirm_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--tr-bg-light-pink);
+}
