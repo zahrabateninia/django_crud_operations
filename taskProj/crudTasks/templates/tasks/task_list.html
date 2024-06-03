@@ -11,31 +11,34 @@
 <body>
     {% block content %}
     <h1>Task List</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Due Date</th>
-                <th>Completed</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in tasks %}
+    <div id="task_list">
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ task.title }}</td>
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.due_date }}</td>
-                    <td>{{ task.is_completed|yesno:"Yes,No" }}</td>
-                    <td>
-                        <a href="{% url 'task-update' task.pk %}">Edit</a> |
-                        <a href="{% url 'task-delete' task.pk %}">Delete</a>
-                    </td>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Completed</th>
+                    <th>Actions</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.due_date }}</td>
+                        <td>{{ task.is_completed|yesno:"Yes,No" }}</td>
+                        <td>
+                            <a href="{% url 'task-update' task.pk %}">Edit</a> |
+                            <a href="{% url 'task-delete' task.pk %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
     <button class="btn">
         <a href="{% url 'task-create' %}">Create New Task</a>
     </button>
