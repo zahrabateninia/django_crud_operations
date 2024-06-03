@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'CSS/confirmStyles.css' %}">
 </head>
 <body>
+    {% block content %}
     <h1 class="delete_task">Delete Task</h1>
     <div class="confirm_box">
         <p>Are you sure you want to delete "{{ task.title }}"?</p>
@@ -18,5 +19,6 @@
     </form>
     <a href="{% url 'task-list' %}">Cancel</a>
     </div>
+    {% endblock %}
 </body>
 </html>

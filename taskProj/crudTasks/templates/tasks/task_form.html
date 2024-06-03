@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
+    {% block content %}
     <h1 class="task_form">{{ form.instance.pk|yesno:"Update Task,Create Task" }}</h1>
     <form method="post">
         {% csrf_token %}
@@ -33,6 +34,7 @@
         </div>
         <button  class="btn" type="submit">Save</button>
     </form>
+    {% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr(".datetimepicker", {

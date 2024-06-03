@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
 </head>
 <body>
+    {% block content %}
     <h1>Task List</h1>
     <table>
         <thead>
@@ -38,6 +39,7 @@
     <button class="btn">
         <a href="{% url 'task-create' %}">Create New Task</a>
     </button>
+    {% endblock %}
 </body>
 </html>
 
