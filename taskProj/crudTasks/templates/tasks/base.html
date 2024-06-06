@@ -14,8 +14,14 @@
 <body>
     {% block content %}
     {% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="{% static 'main.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr(".datetimepicker", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+        });
+    </script>
 </body>
 </html>
 
