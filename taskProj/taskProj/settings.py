@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -117,10 +118,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [  # Additional locations for static files
-    BASE_DIR / "static",
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "crudTasks/static"),
 ]
-STATIC_ROOT = BASE_DIR / "staticfiles"  # Directory where collectstatic will collect static files for production
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") # Directory where collectstatic will collect static files for production
 
 
 
