@@ -14,13 +14,37 @@
     <h1 class="delete_task">Delete Task</h1>
     <div class="confirm_box">
         <p>Are you sure you want to delete "{{ task.title }}"?</p>
-    <!-- <form method="post"> -->
         {% csrf_token %}
-        <button class="btn" type="submit">Yes, delete</button>
-    <!-- </form> -->
-    <a href="{% url 'task-list' %}" >Cancel</a>
+        <button class="btn" id="confirm-delete" data-url="{% url 'task_delete' task.pk %}">Yes, delete</button>
+        <a href="{% url 'task_list' %}">Cancel</a>
     </div>
     {% endblock %}
+
+    <script>
+        $(document).ready(function() {
+            $('#confirm-delete').click(function(event) {
+                event.preventDefault();
+                var url = $(this).data('url');
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            // Redirect to the task list page after successful deletion
+                            window.location.href = "{% url 'task_list' %}";
+                        } else {
+                            alert('An error occurred. Please try again.');
+                        }
+                    },
+                    error: function(response) {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
-
