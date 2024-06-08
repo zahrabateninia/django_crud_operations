@@ -1,20 +1,24 @@
 $(document).ready(function() {
-    // form submission 
+    var baseUrl = '/tasks/'; // actual base URL
+    
+    // Form submission
     $('#task-form').submit(function(event) {
-        event.preventDefault();  
-        var url = $(this).attr('action');  
-        var method = $(this).attr('method');  
-        var formData = $(this).serialize();  
+        event.preventDefault();
+        var url = baseUrl + 'create/';  // Construct the URL correctly
+        var method = $(this).attr('method');
+        var formData = $(this).serialize();
 
         $.ajax({
             type: method,
             url: url,
             data: formData,
             success: function(response) {
-                // Assuming the server returns the updated task list HTML
-                $('#task-list').html(response);  // Update the task list
-                $('#task-form')[0].reset();  
-                alert('Task saved successfully!');
+                if (response.success) {
+                    var redirectUrl = baseUrl;  // Ensure correct base URL
+                    window.location.href = redirectUrl;  // Redirect to the task list page
+                } else {
+                    alert('Error: ' + JSON.stringify(response.errors));
+                }
             },
             error: function(response) {
                 alert('An error occurred. Please try again.');
@@ -22,21 +26,20 @@ $(document).ready(function() {
         });
     });
 
-    // delete action 
+    // Delete action
     $(document).on('click', '.delete-task', function(event) {
-        event.preventDefault();  // Prevent the link from navigating
-        var url = $(this).attr('href');  
+        event.preventDefault();
+        var url = $(this).attr('href');
 
         if (confirm('Are you sure you want to delete this task?')) {
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: {
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()  
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                 },
                 success: function(response) {
-                    // Assuming the server returns the updated task list HTML
-                    $('#task-list').html(response);  
+                    $('#task-list').html(response);
                     alert('Task deleted successfully!');
                 },
                 error: function(response) {
@@ -46,3 +49,4 @@ $(document).ready(function() {
         }
     });
 });
+
