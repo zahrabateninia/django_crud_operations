@@ -6,11 +6,12 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'CSS/formStyles.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     {% block content %}
     <h1 class="task_form">{{ form.instance.pk|yesno:"Update Task,Create Task" }}</h1>
-    <form method="post">
+    <form method="post" id="task-form">
         {% csrf_token %}
         <div class="form-group">
             <label for="id_title">{{ form.title.label }}</label>
@@ -44,3 +45,4 @@
     </script>
 </body>
 </html>
+
