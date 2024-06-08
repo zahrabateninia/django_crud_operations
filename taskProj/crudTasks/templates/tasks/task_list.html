@@ -7,6 +7,7 @@
     {% extends 'tasks/base.html' %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'CSS/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     {% block content %}
@@ -24,7 +25,7 @@
             </thead>
             <tbody>
                 {% for task in tasks %}
-                    <tr>
+                    <tr data-id="{{ task.pk }}">
                         <td>{{ task.title }}</td>
                         <td>{{ task.description }}</td>
                         <td>{{ task.due_date }}</td>
@@ -32,7 +33,6 @@
                         <td>
                             <a href="{% url 'task_update' task.pk %}" class="edit-task">Edit</a> |
                             <a href="#" class="delete-task" data-url="{% url 'task_delete' task.pk %}">Delete</a>
-                            <!-- The href attribute is set to # so it won’t navigate to a new page when clicked. Instead, it relies on JavaScript to handle the click event. -->
                         </td>
                     </tr>
                 {% endfor %}
@@ -41,7 +41,7 @@
     </div>
     
     <button class="btn">
-        <a href="{% url 'task-create' %}">Create New Task</a>
+        <a href="{% url 'task_create' %}" id="create-task">Create New Task</a>
     </button>
 
     <!-- Modal for creating/editing tasks -->
@@ -68,7 +68,68 @@
         </form>
     </div>
     {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $(document).ready(function() {
+            flatpickr(".datetimepicker", {
+                enableTime: true,
+                dateFormat: "Y-m-d H:i",
+            });
+
+            // Open task form for creating a new task
+            $('#create-task').click(function(event) {
+                event.preventDefault();
+                $('#task-form-modal').show();
+                $('#task-form').attr('action', '{% url "task_create" %}');
+                $('#task-form')[0].reset();
+            });
+
+            // Handle form submission via AJAX
+            $('#task-form').submit(function(event) {
+                event.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            // Redirect to the task list page after successful creation
+                            window.location.href = "{% url 'task_list' %}";
+                        } else {
+                            alert('Error: ' + JSON.stringify(response.errors));
+                        }
+                    },
+                    error: function(response) {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+
+            // Handle task deletion via AJAX
+            $('.delete-task').click(function(event) {
+                event.preventDefault();
+                var url = $(this).data('url');
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload(); // Reload the page to update the task list
+                        } else {
+                            alert('An error occurred. Please try again.');
+                        }
+                    },
+                    error: function(response) {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
-
-
