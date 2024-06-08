@@ -11,7 +11,7 @@
 <body>
     {% block content %}
     <h1 class="task_form">{{ form.instance.pk|yesno:"Update Task,Create Task" }}</h1>
-    <form method="post" id="task-form">
+    <form id="task-form" method="post">
         {% csrf_token %}
         <div class="form-group">
             <label for="id_title">{{ form.title.label }}</label>
@@ -33,7 +33,7 @@
             <div>{{ form.is_completed.help_text }}</div>
             {{ form.is_completed }}
         </div>
-        <button  class="btn" type="submit">Save</button>
+        <button class="btn" type="submit">Save</button>
     </form>
     {% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -42,7 +42,27 @@
             enableTime: true,
             dateFormat: "Y-m-d H:i",
         });
+
+        $('#task-form').submit(function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: form.attr('method'),
+                data: form.serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        // Redirect to the task list page after successful creation
+                        window.location.href = "{% url 'task_list' %}";
+                    } else {
+                        alert('Error: ' + JSON.stringify(response.errors));
+                    }
+                },
+                error: function(response) {
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
     </script>
 </body>
 </html>
-
