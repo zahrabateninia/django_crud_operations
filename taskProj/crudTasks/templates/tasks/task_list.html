@@ -43,6 +43,32 @@
     <button class="btn">
         <a href="{% url 'task-create' %}">Create New Task</a>
     </button>
+
+    <!-- Modal for creating/editing tasks -->
+    <div id="task-form-modal" style="display:none;">
+        <form id="task-form" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_title">Title</label>
+                <input type="text" name="title" id="id_title" required>
+            </div>
+            <div class="form-group">
+                <label for="id_description">Description</label>
+                <textarea name="description" id="id_description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="id_due_date">Due Date</label>
+                <input type="text" name="due_date" id="id_due_date" class="datetimepicker" required>
+            </div>
+            <div class="form-group">
+                <label for="id_is_completed">Completed</label>
+                <input type="checkbox" name="is_completed" id="id_is_completed">
+            </div>
+            <button class="btn" type="submit">Save</button>
+        </form>
+    </div>
     {% endblock %}
 </body>
 </html>
+
+
