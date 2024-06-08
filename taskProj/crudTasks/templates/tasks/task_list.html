@@ -30,8 +30,9 @@
                         <td>{{ task.due_date }}</td>
                         <td>{{ task.is_completed|yesno:"Yes,No" }}</td>
                         <td>
-                            <a href="{% url 'task-update' task.pk %}">Edit</a> |
-                            <a href="{% url 'task-delete' task.pk %}">Delete</a>
+                            <a href="{% url 'task_update' task.pk %}" class="edit-task">Edit</a> |
+                            <a href="#" class="delete-task" data-url="{% url 'task_delete' task.pk %}">Delete</a>
+                            <!-- The href attribute is set to # so it won’t navigate to a new page when clicked. Instead, it relies on JavaScript to handle the click event. -->
                         </td>
                     </tr>
                 {% endfor %}
@@ -45,4 +46,3 @@
     {% endblock %}
 </body>
 </html>
-
