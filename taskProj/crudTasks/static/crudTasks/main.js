@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var baseUrl = '/tasks/';
 
-    // Form submission
+    // Form submission for creating tasks
     $('#task-form').submit(function(event) {
         event.preventDefault();
         var url = baseUrl + 'create/';
@@ -20,38 +20,35 @@ $(document).ready(function() {
                     alert('Error: ' + JSON.stringify(response.errors));
                 }
             },
-            error: function(response) {
+            error: function(xhr, status, error) {
                 alert('An error occurred. Please try again.');
             }
         });
     });
 
-    // Delete action
-    $(document).on('click', '.delete-task', function(event) {
+    // Delete task action
+    $('#delete-form').submit(function(event) {
         event.preventDefault();
-        var url = $(this).attr('href');
-
-        if (confirm('Are you sure you want to delete this task?')) {
-            var csrfToken = $('input[name=csrfmiddlewaretoken]').val();  // Ensure CSRF token is retrieved correctly
-            console.log('CSRF Token:', csrfToken);
-            console.log('URL:', url);
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    csrfmiddlewaretoken: csrfToken
-                },
-                success: function(response) {
-                    if (response.success) {
-                        window.location.href = baseUrl;
-                    } else {
-                        console.log('An error occurred. Please try again.');
-                    }
-                },
-                error: function(response) {
-                    console.log('An error occurred. Please try again.');
+        var url = $(this).attr('action');
+        var csrfToken = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: csrfToken
+            },
+            success: function(response) {
+                if (response.success) {
+                    window.location.href = baseUrl;
+                } else {
+                    console.error('Server error:', response);
+                    alert('An error occurred. Please try again.');
                 }
-            });
-        }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
     });
 });

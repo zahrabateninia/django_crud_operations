@@ -16,37 +16,12 @@
         <p>Are you sure you want to delete "{{ task.title }}"?</p>
         <form id="delete-form" method="post" action="{% url 'task_delete' task.pk %}">
             {% csrf_token %}
+            <button class="btn"><a href="{% url 'task_list' %}">Cancel</a></button>
             <button type="submit" class="btn">Yes, delete</button>
-            <a href="{% url 'task_list' %}">Cancel</a>
         </form>
     </div>
     {% endblock %}
-
-    <script>
-        $(document).ready(function() {
-            $('#delete-form').submit(function(event) {
-                event.preventDefault();
-                var url = $(this).attr('action');
-                var csrfToken = $('input[name=csrfmiddlewaretoken]').val();
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        csrfmiddlewaretoken: csrfToken
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            window.location.href = "{% url 'task_list' %}";
-                        } else {
-                            console.log('An error occurred. Please try again.');
-                        }
-                    },
-                    error: function(response) {
-                        console.log('An error occurred. Please try again.');
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
+
+
