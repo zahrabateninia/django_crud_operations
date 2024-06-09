@@ -14,7 +14,7 @@
     <h1 class="delete_task">Delete Task</h1>
     <div class="confirm_box">
         <p>Are you sure you want to delete "{{ task.title }}"?</p>
-        <form id="delete-form" method="post" action="{% url 'task_delete' task.pk %}">
+        <form style="box-shadow: none; width: auto;" id="delete-form" method="post" action="{% url 'task_delete' task.pk %}">
             {% csrf_token %}
             <button class="btn"><a href="{% url 'task_list' %}">Cancel</a></button>
             <button type="submit" class="btn">Yes, delete</button>

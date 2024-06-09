@@ -34,7 +34,7 @@ label:hover + .help-text {
     display: block;
 }
 
-form {
+form#task-form {
     margin-top: 7rem;
     background: #fff;
     padding: 20px;
