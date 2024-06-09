@@ -36,17 +36,23 @@ $(document).ready(function() {
                 type: 'POST',
                 url: url,
                 data: {
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 success: function(response) {
                     $('#task-list').html(response);
-                    alert('Task deleted successfully!');
+                    // alert('Task deleted successfully!');
+                    console.log(response)
                 },
                 error: function(response) {
-                    alert('An error occurred. Please try again.');
+                    // alert('An error occurred. Please try again.');
+                    console.log(response)
                 }
             });
         }
     });
+
+    
 });
+
 

@@ -41,3 +41,4 @@ def task_delete(request, pk):
         return JsonResponse({'success': True})
     else:
         return render(request, 'tasks/task_confirm_delete.html', {'task': task})
+
