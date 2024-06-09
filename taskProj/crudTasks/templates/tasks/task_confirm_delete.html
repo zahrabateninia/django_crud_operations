@@ -13,36 +13,36 @@
     {% block content %}
     <h1 class="delete_task">Delete Task</h1>
     <div class="confirm_box">
-        <!-- <p>Are you sure you want to delete "{{ task.title }}"?</p> -->
-        {% csrf_token %}
-        <button class="btn" id="confirm-delete" data-url="{% url 'task_delete' task.pk %}">Yes, delete</button>
-        <a href="{% url 'task_list' %}">Cancel</a>
+        <p>Are you sure you want to delete "{{ task.title }}"?</p>
+        <form id="delete-form" method="post" action="{% url 'task_delete' task.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn">Yes, delete</button>
+            <a href="{% url 'task_list' %}">Cancel</a>
+        </form>
     </div>
     {% endblock %}
 
     <script>
         $(document).ready(function() {
-            $('#confirm-delete').click(function(event) {
+            $('#delete-form').submit(function(event) {
                 event.preventDefault();
-                var url = $(this).data('url');
+                var url = $(this).attr('action');
+                var csrfToken = $('input[name=csrfmiddlewaretoken]').val();
                 $.ajax({
                     url: url,
                     type: 'POST',
                     data: {
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                        csrfmiddlewaretoken: csrfToken
                     },
                     success: function(response) {
                         if (response.success) {
-                            // Redirect to the task list page after successful deletion
                             window.location.href = "{% url 'task_list' %}";
                         } else {
-                            // alert('An error occurred. Please try again.');
-                            console.log(response)
+                            console.log('An error occurred. Please try again.');
                         }
                     },
                     error: function(response) {
-                        // alert('An error occurred. Please try again.');
-                        console.log(response)
+                        console.log('An error occurred. Please try again.');
                     }
                 });
             });

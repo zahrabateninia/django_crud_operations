@@ -32,7 +32,7 @@
                         <td>{{ task.is_completed|yesno:"Yes,No" }}</td>
                         <td>
                             <a href="{% url 'task_update' task.pk %}" class="edit-task">Edit</a> |
-                            <a href="#" class="delete-task" data-url="{% url 'task_delete' task.pk %}">Delete</a>
+                            <a href="{% url 'task_delete' task.pk %}" class="delete-task" >Delete</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -40,8 +40,9 @@
         </table>
     </div>
     
-    <button class="btn">
-        <a href="{% url 'task_create' %}" id="create-task">Create New Task</a>
+    <button class="btn" id="create-task">
+        <!-- <a href="{% url 'task_create' %}" id="create-task">Create New Task</a> -->
+        <a href="{% url 'task_create' %}" >Create New Task</a>
     </button>
 
     <!-- Modal for creating/editing tasks -->

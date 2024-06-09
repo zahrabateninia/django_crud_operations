@@ -1,10 +1,10 @@
 $(document).ready(function() {
-    var baseUrl = '/tasks/'; // actual base URL
-    
+    var baseUrl = '/tasks/';
+
     // Form submission
     $('#task-form').submit(function(event) {
         event.preventDefault();
-        var url = baseUrl + 'create/';  // Construct the URL correctly
+        var url = baseUrl + 'create/';
         var method = $(this).attr('method');
         var formData = $(this).serialize();
 
@@ -14,8 +14,8 @@ $(document).ready(function() {
             data: formData,
             success: function(response) {
                 if (response.success) {
-                    var redirectUrl = baseUrl;  // Ensure correct base URL
-                    window.location.href = redirectUrl;  // Redirect to the task list page
+                    var redirectUrl = baseUrl;
+                    window.location.href = redirectUrl;
                 } else {
                     alert('Error: ' + JSON.stringify(response.errors));
                 }
@@ -32,27 +32,26 @@ $(document).ready(function() {
         var url = $(this).attr('href');
 
         if (confirm('Are you sure you want to delete this task?')) {
+            var csrfToken = $('input[name=csrfmiddlewaretoken]').val();  // Ensure CSRF token is retrieved correctly
+            console.log('CSRF Token:', csrfToken);
+            console.log('URL:', url);
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: {
-                    // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                    csrfmiddlewaretoken: csrfToken
                 },
                 success: function(response) {
-                    $('#task-list').html(response);
-                    // alert('Task deleted successfully!');
-                    console.log(response)
+                    if (response.success) {
+                        window.location.href = baseUrl;
+                    } else {
+                        console.log('An error occurred. Please try again.');
+                    }
                 },
                 error: function(response) {
-                    // alert('An error occurred. Please try again.');
-                    console.log(response)
+                    console.log('An error occurred. Please try again.');
                 }
             });
         }
     });
-
-    
 });
-
-
